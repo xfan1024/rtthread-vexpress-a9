@@ -1,8 +1,8 @@
 CROSS_COMPILE := arm-none-eabi-
 CC := $(CROSS_COMPILE)gcc
 
-CFLAGS := -march=armv7-a -mtune=cortex-a9 -mfpu=vfpv3-d16 -mfloat-abi=softfp -g -Og
-AFLAGS := -march=armv7-a -mtune=cortex-a9 -g -Og
+CFLAGS := -march=armv7-a -mtune=cortex-a9 -msoft-float -O3
+AFLAGS := -march=armv7-a -mtune=cortex-a9 -O3
 LFLAGS := -specs=nosys.specs -T link.ld -nostartfiles
 
 C_SRCS := main.c pl011.c

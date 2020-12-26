@@ -37,6 +37,7 @@ SECTIONS
 
     .heap : {
         rtt_heap_start = .;
-        rtt_heap_end = ORIGIN(ram) + LENGTH(ram);
+        . = ORIGIN(ram) + LENGTH(ram);
+        rtt_heap_end = .;
     } > ram
 }

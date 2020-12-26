@@ -17,7 +17,7 @@ $(eval _OBJ := $(patsubst %.c,%.o,$(1)))
 OBJS += $(_OBJ)
 DEPS += $(_SRC).d
 $(_OBJ) : $(_SRC)
-	@[ "$(HIDE)" = "@" ] && echo " CC       $(_SRC)" || true
+	@[ "$(HIDE)" = "@" ] && echo " CC       $(_OBJ)" || true
 	$(HIDE)$(CC) -c $(_SRC) $(CFLAGS) -MMD -MF $(_SRC).d  -o $(_OBJ)
 endef
 
@@ -27,7 +27,7 @@ $(eval _OBJ := $(patsubst %.S,%.o,$(1)))
 OBJS += $(_OBJ)
 DEPS += $(_SRC).d
 $(_OBJ) : $(_SRC)
-	@[ "$(HIDE)" = "@" ] && echo " AS       $(_SRC)" || true
+	@[ "$(HIDE)" = "@" ] && echo " AS       $(_OBJ)" || true
 	$(HIDE)$(CC) -c $(_SRC) $(AFLAGS) -MMD -MF $(_SRC).d  -o $(_OBJ)
 endef
 

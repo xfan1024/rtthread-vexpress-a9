@@ -62,14 +62,6 @@ int rt_hw_timer_init(void)
     return 0;
 }
 
-static void hello_puts(const char *s)
-{
-    while (*s)
-    {
-        pl011_putchar(UART0_BASE, *s++);
-    }
-}
-
 static void idle_wfi()
 {
     __asm("wfi");

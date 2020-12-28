@@ -1,3 +1,9 @@
 [submodule "rtthread-nano"]
 	path = rtthread-nano
 	url = https://github.com/RT-Thread/rtthread-nano
+[submodule "mbedtls"]
+	path = mbedtls
+	url = https://github.com/RT-Thread-packages/mbedtls
+[submodule "mbedtls_bench"]
+	path = mbedtls_bench
+	url = https://github.com/xfan1024/rttpkg-mbedtls_bench

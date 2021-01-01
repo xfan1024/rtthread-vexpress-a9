@@ -33,8 +33,11 @@ endef
 
 $(foreach f,$(C_SRCS),$(eval $(call add_c_source,$(f))))
 $(foreach f,$(S_SRCS),$(eval $(call add_s_source,$(f))))
+ifneq ($(LDSCRIPT),)
+	LFLAGS += -T $(LDSCRIPT)
+endif
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS) $(LDSCRIPT)
 	@[ "$(HIDE)" = "@" ] && echo " LD       $(TARGET)" || true
 	$(HIDE)$(CC) $(OBJS) $(LFLAGS) -o $(TARGET) -Wl,-Map=$(TARGET).map,--cref
 	@[ "$(HIDE)" = "@" ] && echo " OBJDUMP  $(TARGET).asm" || true

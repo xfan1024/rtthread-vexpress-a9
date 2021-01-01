@@ -3,8 +3,9 @@ CC := $(CROSS_COMPILE)gcc
 
 CFLAGS := -march=armv7-a -mtune=cortex-a9 -msoft-float -O3
 AFLAGS := -march=armv7-a -mtune=cortex-a9 -O3
-LFLAGS := -specs=nosys.specs -T link.ld -nostartfiles 
+LFLAGS := -specs=nosys.specs -nostartfiles
 LFLAGS += -Wl,--wrap=_malloc_r -Wl,--wrap=_realloc_r -Wl,--wrap=_free_r -Wl,--wrap=_calloc_r
+LDSCRIPT := link.ld
 
 TARGET := rt-thread
 
@@ -40,10 +41,8 @@ S_SRCS := $(filter-out $(FILTER_OUT),$(S_SRCS))
 
 include build.mk
 
-.PHONY: link delete_target
+$(TARGET).bin : $(TARGET)
+	@[ "$(HIDE)" = "@" ] && echo " OBJCOPY  $(TARGET).bin" || true
+	$(HIDE)$(CROSS_COMPILE)objcopy -O binary $(TARGET) $(TARGET).bin
 
-delete_target:
-	@[ "$(HIDE)" = "@" ] && echo " DELETE   $(TARGET)" || true
-	$(HIDE)rm -f $(TARGET)
-
-link: delete_target $(TARGET)
+all: $(TARGET).bin

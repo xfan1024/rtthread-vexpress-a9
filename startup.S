@@ -32,7 +32,7 @@
 #define ISR_Stack_Size  (UND_Stack_Size + SVC_Stack_Size + ABT_Stack_Size + \
                  RT_FIQ_STACK_PGSZ + RT_IRQ_STACK_PGSZ)
 
-.section .data.share.isr
+.section .isr_stack,"aw" /* @nobits not working, why?*/
 /* stack */
 .globl stack_start
 .globl stack_top
@@ -59,14 +59,16 @@ _reset:
     bl      stack_setup
 
     /* clear .bss */
-    mov     r0,#0                   /* get a zero                       */
-    ldr     r1,=__bss_start         /* bss start                        */
-    ldr     r2,=__bss_end           /* bss end                          */
+    ldr     r0, =__bss_start
+    mov     r1, #0
+    ldr     r2, =__bss_size
+    bl      memset
 
-bss_loop:
-    cmp     r1,r2                   /* check if data to clear           */
-    strlo   r0,[r1],#4              /* clear 4 bytes                    */
-    blo     bss_loop                /* loop until done                  */
+    /* load .data */
+    ldr     r0, =__data_start
+    ldr     r1, =__data_lma_start
+    ldr     r2, =__data_size
+    bl      memcpy
 
 #ifdef RT_USING_SMP
     mrc p15, 0, r1, c1, c0, 1
@@ -105,6 +107,7 @@ _rtthread_startup:
     .word rtthread_startup
 
 stack_setup:
+
     ldr     r0, =stack_top
 
     @  Set the startup stack for svc

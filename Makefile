@@ -41,6 +41,8 @@ S_SRCS := $(filter-out $(FILTER_OUT),$(S_SRCS))
 
 include build.mk
 
+OFILES += $(TARGET).bin
+
 $(TARGET).bin : $(TARGET)
 	@[ "$(HIDE)" = "@" ] && echo " OBJCOPY  $(TARGET).bin" || true
 	$(HIDE)$(CROSS_COMPILE)objcopy -O binary $(TARGET) $(TARGET).bin

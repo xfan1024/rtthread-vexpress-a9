@@ -43,8 +43,15 @@ $(TARGET): $(OBJS) $(LDSCRIPT)
 	@[ "$(HIDE)" = "@" ] && echo " OBJDUMP  $(TARGET).asm" || true
 	$(HIDE)$(CROSS_COMPILE)objdump -d $(TARGET) >$(TARGET).asm
 
+OFILES += $(TARGET) $(TARGET).asm $(TARGET).map
+
 .PHONY: clean
 clean:
-	rm -f $(OBJS) $(DEPS) $(TARGET) $(TARGET).asm $(TARGET).map
+	@[ "$(HIDE)" = "@" ] && echo " REMOVE   object files ..." || true
+	$(HIDE)rm -f $(OBJS)
+	@[ "$(HIDE)" = "@" ] && echo " REMOVE   dependence files ..." || true
+	$(HIDE)rm -f $(DEPS)
+	@[ "$(HIDE)" = "@" ] && echo " REMOVE   output files ..." || true
+	$(HIDE)rm -f $(OFILES)
 
 -include $(DEPS)

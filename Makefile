@@ -3,7 +3,7 @@ CC := $(CROSS_COMPILE)gcc
 
 CFLAGS := -march=armv7-a -mtune=cortex-a9 -msoft-float -O3
 AFLAGS := -march=armv7-a -mtune=cortex-a9 -O3
-LFLAGS := -specs=nosys.specs -nostartfiles
+LFLAGS := -specs=nosys.specs -specs=nano.specs -nostartfiles
 LFLAGS += -Wl,--wrap=_malloc_r -Wl,--wrap=_realloc_r -Wl,--wrap=_free_r -Wl,--wrap=_calloc_r
 LDSCRIPT := link.ld
 
